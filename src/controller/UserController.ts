@@ -8,6 +8,7 @@ class UserController{
 
     static listAll = async (req: Request, res: Response) => {
         //Get users from database
+        console.log("TEST")
         const userRepository = getRepository(User);
         const users = await userRepository.find({
             select: ["id", "username", "role","email"] //We dont want to send the passwords on response
@@ -19,7 +20,8 @@ class UserController{
 
     static getOneById = async (req: Request, res: Response) => {
         //Get the ID from the url
-        const id: number = Number(req.params.id);
+        console.log(req.params.userID)
+        const id: number = Number(req.params.userID);
 
         //Get the user from database
         const userRepository = getRepository(User);
@@ -87,7 +89,7 @@ class UserController{
 
     static editUser = async (req: Request, res: Response) => {
         //Get the ID from the url
-        const id = req.params.id;
+        const id = req.params.userID;
 
         //Get values from the body
         const { username, role,email } = req.body;
@@ -126,7 +128,7 @@ class UserController{
 
     static deleteUser = async (req: Request, res: Response) => {
         //Get the ID from the url
-        const id = req.params.id;
+        const id = req.params.userID;
 
         const userRepository = getRepository(User);
         let user: User;
