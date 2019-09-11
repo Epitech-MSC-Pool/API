@@ -9,9 +9,7 @@ class ClockController {
     static listAll = async (req: Request, res: Response) => {
         //Get users from database
         const clocksRepository = getRepository(Clocks);
-        const clocks = await clocksRepository.find({
-
-        });
+        const clocks = await clocksRepository.find({});
 
         //Send the users object
         res.send(clocks);
@@ -22,21 +20,19 @@ class ClockController {
         console.log("RPOUTE")
         const id: number = Number(req.params.userID);
         console.log(id)
-        const userRepository = getRepository(User);
-        const user = await userRepository.findOneOrFail(id, {
-            select: ["id", "username", "role", "email"] //We dont want to send the password on response
-        });
         //Get the clock from database
         const clocksRepository = getRepository(Clocks);
         try {
-            const clock = await clocksRepository.findOneOrFail({
+            const clock = await clocksRepository.find({
                 where: {
-                    user: user,
+                    user: id,
                 },
             });
+            res.status(200).send(clock)
         } catch (error) {
             res.status(404).send("Clock not found");
         }
+
     };
 
     static newClock = async (req: Request, res: Response) => {
@@ -44,10 +40,7 @@ class ClockController {
         const userId: number = Number(req.params.userID);
         let {time, status} = req.body;
         let clock = new Clocks();
-        const userRepository = getRepository(User);
-        const user = await userRepository.findOneOrFail(userId, {
-            select: ["id", "username", "role", "email"] //We dont want to send the password on response
-        });
+        clock.user = userId;
         clock.time = time;
         clock.status = status;
 

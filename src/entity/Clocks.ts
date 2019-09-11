@@ -27,7 +27,7 @@ export class Clocks {
 
     @OneToOne(type => User)
     @JoinColumn()
-    user: User;
+    user: number;
 
 
 }

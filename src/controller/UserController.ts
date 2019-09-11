@@ -20,18 +20,20 @@ class UserController{
 
     static getOneById = async (req: Request, res: Response) => {
         //Get the ID from the url
-        console.log(req.params.userID)
+        console.log("print"+ req.params.userID)
         const id: number = Number(req.params.userID);
 
         //Get the user from database
         const userRepository = getRepository(User);
+        let user:User = new User();
         try {
-            const user = await userRepository.findOneOrFail(id, {
+             user = await userRepository.findOneOrFail(id, {
                 select: ["id", "username", "role","email"] //We dont want to send the password on response
             });
         } catch (error) {
             res.status(404).send("User not found");
         }
+        res.status(200).send(user)
     };
 
     static getOneByEmail = async (req: Request, res: Response) => {
@@ -39,11 +41,11 @@ class UserController{
         console.log("TEST")
         const email: string = (req.params.email);
         const username: string = (req.params.username);
-
+        let user:User = new User();
         //Get the user from database
         const userRepository = getRepository(User);
         try {
-            const user = await userRepository.findOneOrFail({
+             user = await userRepository.findOneOrFail({
                 where: {
                     email: email,
                     username: username
@@ -53,6 +55,7 @@ class UserController{
         } catch (error) {
             res.status(404).send("User not found");
         }
+        res.status(200).send(user)
     };
 
     static newUser = async (req: Request, res: Response) => {
