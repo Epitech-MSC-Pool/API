@@ -9,8 +9,8 @@ const router = Router();
 router.get("/users", [checkJwt, checkRole(["ADMIN"])], UserController.listAll);
 
 router.get(
-    "users/:username&:email",
-    [checkJwt, checkRole(["ADMIN"])],
+    "/users/:username&:email",
+    [checkJwt, checkRole(["ADMIN","USER"])],
     UserController.getOneByEmail
 );
 // Get one user
@@ -23,7 +23,7 @@ router.get(
 
 
 //Create a new user
-router.post("/users", [checkJwt, checkRole(["ADMIN"])], UserController.newUser);
+router.post("/users", UserController.newUser);
 
 //Edit one user
 router.put(
