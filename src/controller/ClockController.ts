@@ -17,9 +17,7 @@ class ClockController {
 
     static getClocksByUserID = async (req: Request, res: Response) => {
         //Get the ID from the url
-        console.log("RPOUTE")
         const id: number = Number(req.params.userID);
-        console.log(id)
         //Get the clock from database
         const clocksRepository = getRepository(Clocks);
         try {
@@ -40,6 +38,7 @@ class ClockController {
         const userId: number = Number(req.params.userID);
         let {time, status} = req.body;
         let clock = new Clocks();
+        console.log(time, status)
         clock.user = userId;
         clock.time = time;
         clock.status = status;
@@ -52,6 +51,7 @@ class ClockController {
         }
 
         //Try to save.
+        console.log(clock)
         const clocksRepository = getRepository(Clocks);
         try {
             await clocksRepository.save(clock);

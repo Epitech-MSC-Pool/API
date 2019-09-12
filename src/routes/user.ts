@@ -8,6 +8,11 @@ const router = Router();
 //Get all users
 router.get("/users", [checkJwt, checkRole(["ADMIN"])], UserController.listAll);
 
+router.get(
+    "users/:username&:email",
+    [checkJwt, checkRole(["ADMIN"])],
+    UserController.getOneByEmail
+);
 // Get one user
 router.get(
     "/users/:userID",
@@ -15,11 +20,7 @@ router.get(
     UserController.getOneById
 );
 
-router.get(
-    "/users/:username/:email",
-    [checkJwt, checkRole(["ADMIN"])],
-    UserController.getOneByEmail
-);
+
 
 //Create a new user
 router.post("/users", [checkJwt, checkRole(["ADMIN"])], UserController.newUser);

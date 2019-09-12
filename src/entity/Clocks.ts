@@ -6,7 +6,7 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     Timestamp,
-    OneToOne, JoinColumn
+    OneToOne, JoinColumn, ManyToMany, ManyToOne
 } from "typeorm";
 import {Length, IsNotEmpty, IsEmail} from "class-validator";
 import * as bcrypt from "bcryptjs";
@@ -18,14 +18,13 @@ export class Clocks {
     id: number;
 
     @Column()
-    @CreateDateColumn()
+    @Column({ type: "date" })
     time: Date;
 
     @Column()
-    @IsNotEmpty()
     status: boolean = false;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
     user: number;
 
