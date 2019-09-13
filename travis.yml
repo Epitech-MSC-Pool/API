@@ -1,3 +1,22 @@
 language: node_js
 node_js:
-  - 7
+  - "stable"
+
+services:
+  - docker
+
+cache:
+  directories:
+    - "node_modules"
+install:
+  - npm install
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t TimeManagerAPI .
+        - docker images
+        - docker tag TimeManagerAPI $DOCKER_USERNAME/TimeManagerAPI
+        - docker push $DOCKER_USERNAME/travis-ci-build-stages-demo
