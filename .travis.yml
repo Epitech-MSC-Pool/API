@@ -16,7 +16,7 @@ jobs:
     - stage: build docker image
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -t TimeManagerAPI .
+        - docker build -t time-manager-api .
         - docker images
-        - docker tag TimeManagerAPI $DOCKER_USERNAME/TimeManagerAPI
-        - docker push $DOCKER_USERNAME/travis-ci-build-stages-demo
+        - docker tag time-manager-api $DOCKER_USERNAME/time-manager-api
+        - docker push $DOCKER_USERNAME/time-manager-api
