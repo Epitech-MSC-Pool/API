@@ -27,7 +27,7 @@ class UserController{
         let user:User = new User();
         try {
              user = await userRepository.findOneOrFail(id, {
-                select: ["id", "username", "role","email"] //We dont want to send the password on response
+                select: ["id", "username", "role","email","firstname","lastname"] //We dont want to send the password on response
             });
         } catch (error) {
             res.status(404).send("User not found");
@@ -49,7 +49,7 @@ class UserController{
                     email: email,
                     username: username
                 },
-                select: ["id", "username", "role","email"] //We dont want to send the password on response
+                select: ["id", "username", "role","email","firstname","lastname"] //We dont want to send the password on response
             });
         } catch (error) {
             res.status(404).send("User not found");
@@ -59,13 +59,16 @@ class UserController{
 
     static newUser = async (req: Request, res: Response) => {
         //Get parameters from the body
+        console.log("TEST")
         let { username, password, role,email } = req.body;
         let user = new User();
         user.username = username;
         user.password = password;
         user.role = role;
         user.email = email;
-
+        user.lastname = '';
+        user.firstname = '';
+        console.log(user)
         //Validade if the parameters are ok
         const errors = await validate(user);
         if (errors.length > 0) {
@@ -94,7 +97,7 @@ class UserController{
         const id = req.params.userID;
 
         //Get values from the body
-        const { username, role,email } = req.body;
+        const { username, role,email,name,surname } = req.body;
 
         //Try to find user on database
         const userRepository = getRepository(User);
@@ -111,6 +114,8 @@ class UserController{
         user.username = username;
         user.email = email;
         user.role = role;
+        user.firstname = name;
+        user.lastname = surname;
         const errors = await validate(user);
         if (errors.length > 0) {
             res.status(400).send(errors);

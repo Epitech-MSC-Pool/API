@@ -28,7 +28,7 @@ router.post("/users", UserController.newUser);
 //Edit one user
 router.put(
     "/users/:userID",
-    [checkJwt, checkRole(["ADMIN"])],
+    [checkJwt, checkRole(["ADMIN","USER"])],
     UserController.editUser
 );
 
