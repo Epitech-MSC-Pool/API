@@ -23,7 +23,7 @@ router.get(
 
 
 //Create a new user
-router.post("/users", UserController.newUser);
+router.post("/users/sign_up", UserController.newUser);
 
 //Edit one user
 router.put(

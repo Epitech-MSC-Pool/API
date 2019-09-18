@@ -16,7 +16,7 @@ class WorkingTimesController {
         const workingTimesRepository = getRepository(WorkingTimes);
         const workingTimes = await workingTimesRepository.find({
             where: {
-                userID: id,
+                user: id,
                 start: start,
                 end: end
             }
@@ -36,7 +36,7 @@ class WorkingTimesController {
             const workingTimesRepository = getRepository(WorkingTimes);
             workingTimes = await workingTimesRepository.find({
                 where: {
-                    userID: userID,
+                    user: userID,
                     id: workingtimeID
                 }
             });

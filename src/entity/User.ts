@@ -1,6 +1,16 @@
-import {Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    Unique,
+    CreateDateColumn,
+    UpdateDateColumn,
+    ManyToOne,
+    JoinColumn, ManyToMany
+} from "typeorm";
 import {Length, IsNotEmpty, IsEmail} from "class-validator";
 import * as bcrypt from "bcryptjs";
+import {Team} from './Team';
 
 @Entity()
 export class User {
@@ -8,7 +18,6 @@ export class User {
     id: number;
 
     @Column()
-    @Length(4, 20)
     username: string;
 
     @Column()
@@ -32,9 +41,11 @@ export class User {
     updatedAt: Date;
 
     @Column()
+    @Length(4, 100)
     firstname: string;
 
     @Column()
+    @Length(4, 100)
     lastname: string;
 
     hashPassword() {

@@ -13,19 +13,15 @@ import * as bcrypt from "bcryptjs";
 import {User} from './User';
 
 @Entity()
-export class Clocks {
+export class Team {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    @Column({ type: "date" })
-    time: Date;
+    name: string;
 
     @Column()
-    status: boolean = false;
+    manager: number;
 
-    @ManyToMany(type => User)
-    @JoinColumn()
-    user: number;
-    
+
 }

@@ -10,7 +10,7 @@ class UserController{
         //Get users from database
         const userRepository = getRepository(User);
         const users = await userRepository.find({
-            select: ["id", "username", "role","email"] //We dont want to send the passwords on response
+            select: ["id", "username", "role","email","firstname","lastname"] //We dont want to send the passwords on response
         });
 
         //Send the users object
@@ -60,14 +60,14 @@ class UserController{
     static newUser = async (req: Request, res: Response) => {
         //Get parameters from the body
         console.log("TEST")
-        let { username, password, role,email } = req.body;
+        let {password,email,firstname,lastname } = req.body;
         let user = new User();
-        user.username = username;
+        user.lastname = lastname;
         user.password = password;
-        user.role = role;
+        user.role = "USER";
         user.email = email;
-        user.lastname = '';
-        user.firstname = '';
+        user.firstname = firstname;
+        user.username = "";
         console.log(user)
         //Validade if the parameters are ok
         const errors = await validate(user);

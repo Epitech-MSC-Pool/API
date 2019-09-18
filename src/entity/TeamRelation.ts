@@ -11,21 +11,20 @@ import {
 import {Length, IsNotEmpty, IsEmail} from "class-validator";
 import * as bcrypt from "bcryptjs";
 import {User} from './User';
+import {Team} from './Team';
 
 @Entity()
-export class Clocks {
+export class TeamRelation {
+
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    @Column({ type: "date" })
-    time: Date;
-
-    @Column()
-    status: boolean = false;
-
-    @ManyToMany(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
     user: number;
-    
+
+    @ManyToOne(type => Team)
+    @JoinColumn()
+    team: number;
+
 }

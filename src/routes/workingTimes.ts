@@ -13,6 +13,8 @@ router.post("/workingtimes/:userID", [checkJwt, checkRole(["ADMIN"])], WorkingTi
 
 router.put("/workingtimes/:id", [checkJwt, checkRole(["ADMIN"])], WorkingTimesController.editWorkingTime);
 
+router.put("/workingtimes/:id/time", [checkJwt, checkRole(["ADMIN"])], WorkingTimesController.editWorkingTime);
+
 router.delete("/workingtimes/:id", [checkJwt, checkRole(["ADMIN"])], WorkingTimesController.deleteWorkingTime);
 
 export default router;
