@@ -69,7 +69,7 @@ class TeamController {
         const id = req.params.teamID;
 
         //Get values from the body
-        const { name } = req.body;
+        const { name,manager } = req.body;
 
         //Try to find user on database
         const teamRepository = getRepository(Team);
@@ -83,7 +83,8 @@ class TeamController {
         }
 
         //Validate the new values on model
-        team.name = name
+        team.name = name;
+        team.manager = Number(manager);
         const errors = await validate(team);
         if (errors.length > 0) {
             res.status(400).send(errors);

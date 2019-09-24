@@ -60,14 +60,14 @@ class UserController{
     static newUser = async (req: Request, res: Response) => {
         //Get parameters from the body
         console.log("TEST")
-        let {password,email,firstname,lastname } = req.body;
+        let {password,email,firstname,lastname,username } = req.body;
         let user = new User();
         user.lastname = lastname;
         user.password = password;
         user.role = "USER";
         user.email = email;
         user.firstname = firstname;
-        user.username = "";
+        user.username = username;
         console.log(user)
         //Validade if the parameters are ok
         const errors = await validate(user);
@@ -97,7 +97,7 @@ class UserController{
         const id = req.params.userID;
 
         //Get values from the body
-        const { username, role,email,name,surname } = req.body;
+        const { username, role,email,firstname,lastname} = req.body;
 
         //Try to find user on database
         const userRepository = getRepository(User);
@@ -114,8 +114,8 @@ class UserController{
         user.username = username;
         user.email = email;
         user.role = role;
-        user.firstname = name;
-        user.lastname = surname;
+        user.firstname = firstname;
+        user.lastname = lastname;
         const errors = await validate(user);
         if (errors.length > 0) {
             res.status(400).send(errors);
