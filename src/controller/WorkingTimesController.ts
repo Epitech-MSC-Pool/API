@@ -1,9 +1,13 @@
 import {Request, Response} from "express";
-import {getRepository} from "typeorm";
+import {Between, getRepository} from "typeorm";
 import {validate} from "class-validator";
+import { addYears, subYears } from 'date-fns';
 
 import {User} from "../entity/User";
 import {WorkingTimes} from '../entity/WorkingTimes';
+
+export const AfterDate = (date: Date) => Between(date, addYears(date, 100));
+export const BeforeDate = (date: Date) => Between(subYears(date, 100), date);
 
 class WorkingTimesController {
 
@@ -17,8 +21,8 @@ class WorkingTimesController {
         const workingTimes = await workingTimesRepository.find({
             where: {
                 user: id,
-                start: start,
-                end: end
+                start: AfterDate(new Date(start)),
+                end: BeforeDate(new Date(end))
             }
         });
         //Send the users object

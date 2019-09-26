@@ -18,14 +18,23 @@ export class Clocks {
     id: number;
 
     @Column()
-    @Column({ type: "date" })
-    time: Date;
+    @Column({
+        type: "date",
+        nullable:true })
+    timeIn: Date;
+
+    @Column()
+    @Column({
+        type: "date",
+        nullable:true
+    })
+    timeOut: Date;
 
     @Column()
     status: boolean = false;
 
-    @ManyToMany(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
     user: number;
-    
+
 }

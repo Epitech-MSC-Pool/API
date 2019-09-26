@@ -89,7 +89,7 @@ class UserController{
         }
 
         //If all ok, send 201 response
-        res.status(201).send("User created");
+        res.status(201).send(user);
     };
 
     static editUser = async (req: Request, res: Response) => {
