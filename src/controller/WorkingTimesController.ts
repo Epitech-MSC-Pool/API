@@ -16,17 +16,25 @@ class WorkingTimesController {
         const id: number = Number(req.params.userID);
         const start: string = req.params.start;
         const end: string = req.params.end;
-        console.log(id, start, end)
+        let dateStart = new Date(start);
+        let dateEnd = new Date(end);
         const workingTimesRepository = getRepository(WorkingTimes);
         const workingTimes = await workingTimesRepository.find({
             where: {
                 user: id,
-                start: AfterDate(new Date(start)),
-                end: BeforeDate(new Date(end))
             }
         });
+        let Times = []
+        for (let work of workingTimes){
+            let date1 = new Date(work.start);
+            let date2 = new Date(work.end);
+            if (date1.getDate() > dateStart.getDate() && date2.getDate() < dateEnd.getDate() ){
+
+                Times.push(work);
+            }
+        }
         //Send the users object
-        res.send(workingTimes);
+        res.send(Times);
     };
 
     static getOneById = async (req: Request, res: Response) => {

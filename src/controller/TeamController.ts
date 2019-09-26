@@ -185,6 +185,50 @@ class TeamController {
         //After all send a 204 (no content, but accepted) response
         res.status(204).send();
     }
+
+    static getTeamByManager = async (req: Request, res: Response) => {
+        const managerId = Number(req.params.managerId);
+
+        const teamRepository = getRepository(Team);
+        const teamRelationRepository = getRepository(TeamRelation);
+        let team = await teamRepository.find({
+                where: {
+                    manager: managerId,
+                }
+            });
+        console.log(team);
+        //After all send a 204 (no content, but accepted) response
+        res.status(200).send(team);
+
+    }
+
+    static getUserForOneTeam = async (req: Request, res: Response) => {
+        const id = Number(req.params.id);
+
+        const teamRelationRepository = getRepository(TeamRelation);
+        const userRepository = getRepository(User);
+        let teams = await teamRelationRepository.find({
+            where: {
+                team: id,
+            },
+            select: ["id","user","team"]
+        });
+        let users = [];
+        console.log("PROUTE");
+        console.log(teams);
+        for (const team of teams) {
+            console.log(team);
+            let user =  await userRepository.findOneOrFail(team.user, {
+                select: ["id", "username","email","firstname","lastname"] //We dont want to send the password on response
+            });
+            console.log(user);
+            users.push(user)
+        };
+        //After all send a 204 (no content, but accepted) response
+        console.log("PROUTE2");
+        res.status(200).send(users);
+
+    }
 }
 
 export default TeamController;

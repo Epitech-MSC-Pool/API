@@ -19,10 +19,12 @@ export class TeamRelation {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column()
     @ManyToOne(type => User)
     @JoinColumn()
     user: number;
 
+    @Column()
     @ManyToOne(type => Team)
     @JoinColumn()
     team: number;
