@@ -152,7 +152,7 @@ class ClockController {
         let workingTime = new WorkingTimes();
         workingTime.start = clock.timeIn;
         workingTime.end = clock.timeOut;
-        workingTime.user = clock.id;
+        workingTime.user = userId;
 
         //Validade if the parameters are ok
         const errors2 = await validate(workingTime);

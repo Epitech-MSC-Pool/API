@@ -15,6 +15,7 @@ export class WorkingTimes {
     @Column({ type: "date" })
     end: Date;
 
+    @Column()
     @ManyToOne(type => User)
     @JoinColumn()
     user: number;

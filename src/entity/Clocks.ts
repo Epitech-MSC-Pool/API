@@ -33,6 +33,7 @@ export class Clocks {
     @Column()
     status: boolean = false;
 
+    @Column()
     @ManyToOne(type => User)
     @JoinColumn()
     user: number;

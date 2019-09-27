@@ -5,7 +5,7 @@ import WorkingTimesController from '../controller/WorkingTimesController';
 
 const router = Router();
 
-router.get("/workingtimes/:userID/:start&:end", [checkJwt, checkRole(["ADMIN"])], WorkingTimesController.listAll);
+router.get("/workingtimes/:userID/:start&:end", [checkJwt], WorkingTimesController.listAll);
 
 router.get("/workingtimes/:userID/:workingtimeID", [checkJwt, checkRole(["ADMIN"])], WorkingTimesController.getOneById);
 

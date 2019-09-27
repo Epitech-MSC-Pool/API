@@ -24,17 +24,27 @@ class WorkingTimesController {
                 user: id,
             }
         });
-        let Times = []
+        console.log(workingTimes)
+        let Times = [];
         for (let work of workingTimes){
             let date1 = new Date(work.start);
             let date2 = new Date(work.end);
-            if (date1.getDate() > dateStart.getDate() && date2.getDate() < dateEnd.getDate() ){
-
+            if (date1.getDate() >= dateStart.getDate() && date2.getDate() <= dateEnd.getDate() ){
                 Times.push(work);
             }
         }
+        let WorkingTimeByDay = []
+        for (let time of Times){
+            let date1 = new Date(time.start);
+            let date2 = new Date(time.end);
+            let TimeDay = {
+                time:(date2.getTime() - date1.getTime())/ (1000*60*60),
+                day:date1.getDate(),
+            };
+            WorkingTimeByDay.push(TimeDay);
+        }
         //Send the users object
-        res.send(Times);
+        res.send({workingTimes:Times,WorkingTimeByDay:WorkingTimeByDay});
     };
 
     static getOneById = async (req: Request, res: Response) => {
