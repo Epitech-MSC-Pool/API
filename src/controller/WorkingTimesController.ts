@@ -29,7 +29,7 @@ class WorkingTimesController {
         for (let work of workingTimes){
             let date1 = new Date(work.start);
             let date2 = new Date(work.end);
-            if (date1.getDate() >= dateStart.getDate() && date2.getDate() <= dateEnd.getDate() ){
+            if (date1 >= dateStart && date2 <= dateEnd ){
                 Times.push(work);
             }
         }
